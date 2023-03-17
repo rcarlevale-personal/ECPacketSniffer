@@ -16,9 +16,11 @@ To install EC PacketSniffer, follow the steps below:
 
 2. Unzip the downloaded file and move the contents to your desired location.
 
-2.1. Make sure Python 3 is installed.
+2.1. If you are on a Windows system, install Python version 3.0 or above at [Python's website](https://www.python.org/downloads/).
 
 3. Run the install-dependencies.bat (for Windows based devices) or install-dependencies.sh (for UNIX based devices.)
+
+When installing this software, it installs dependencies such as the Python 3 programming language (on UNIX systems) and modules such as flask, flaskio, and scapy.
 
 ## Usage
 
