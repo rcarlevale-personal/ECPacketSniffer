@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Packet Sniffer</title>
+    <script src="https://cdn.socket.io/4.5.1/socket.io.min.js"></script>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            text-align: left;
+            padding: 8px;
+            border: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+            color: black;
+        }
+        
+    </style>
+    <script>
+        var socket = io.connect();
+        var currentPortFilter = null;
+
+        function startSniffing() {
+            console.log("STARTED SNIFFING CALLED");
+            socket.emit('start_sniffing');
+        }
+
+        function stopSniffing() {
+            console.log("STOPED SNIFFING CALLED");
+            socket.emit('stop_sniffing');
+        }
+
+        function applyFilter() {
+            var port = document.getElementById("port-input");
+            console.log("FILTER APPLY CALLED " + port); 
+            socket.emit('apply_filter', port.value);
+        }
+
+        function removeFilter() {
+            console.log("FILTER REMOVE CALLED");
+            socket.emit('remove_filter');
+        }
+
+        socket.on('packet', function(data) {
+            if (currentPortFilter === null || data.source_port == currentPortFilter || data.destination_port == currentPortFilter) {
+                console.log(data);
+
+                var table = document.getElementById('packets');
+                var row = table.insertRow();
+
+                var packetnum_cell = row.insertCell();
+                packetnum_cell.innerHTML = data.packetnum;
+                var timestamp_cell = row.insertCell();
+                timestamp_cell.innerHTML = data.timestamp;
+                var source_cell = row.insertCell();
+                source_cell.innerHTML = data.source;
+                var source_port_cell = row.insertCell();
+                source_port_cell.innerHTML = data.source_port;
+                var destination_cell = row.insertCell();
+                destination_cell.innerHTML = data.destination;
+                var destination_port_cell = row.insertCell();
+                destination_port_cell.innerHTML = data.destination_port;
+                var protocol_cell = row.insertCell();
+                protocol_cell.innerHTML = data.protocol;
+                var length_cell = row.insertCell();
+                length_cell.innerHTML = data.length;
+                var raw_data_cell = row.insertCell();
+                raw_data_cell.innerHTML = data.raw_data;
+            } else if (currentPortFilter != null || data.source_port == currentPortFilter || data.destination_port == currentPortFilter) {
+                console.log(data);
+
+                var table = document.getElementById('packets');
+                var row = table.insertRow();
+
+                var packetnum_cell = row.insertCell();
+                packetnum_cell.innerHTML = data.packetnum;
+                var timestamp_cell = row.insertCell();
+                timestamp_cell.innerHTML = data.timestamp;
+                var source_cell = row.insertCell();
+                source_cell.innerHTML = data.source;
+                var source_port_cell = row.insertCell();
+                source_port_cell.innerHTML = data.source_port;
+                var destination_cell = row.insertCell();
+                destination_cell.innerHTML = data.destination;
+                var destination_port_cell = row.insertCell();
+                destination_port_cell.innerHTML = data.destination_port;
+                var protocol_cell = row.insertCell();
+                protocol_cell.innerHTML = data.protocol;
+                var length_cell = row.insertCell();
+                length_cell.innerHTML = data.length;
+                var raw_data_cell = row.insertCell();
+                raw_data_cell.innerHTML = data.raw_data;
+            }
+        });
+
+        socket.on('filter_applied', function(port) {
+            currentPortFilter = port;
+            console.log("FILTER APPLIED");
+        });
+
+        socket.on('filter_removed', function() {
+            currentPortFilter = null;
+            console.log("FILTER REMOVED");
+        });
+
+    </script>
+</head>
+<body>
+    <h1>EC Packet Sniffer</h1>
+    <p>Click the buttons below to start and stop packet sniffing</p>
+    <button onclick="startSniffing()">Start Sniffing</button>
+    <button onclick="stopSniffing()">Stop Sniffing</button>
+    <br><br>
+    <label for="port-input">Filter by port number:</label>
+    <input type="text" id="port-input" name="port">
+    <button onclick="applyFilter()">Apply Filter</button>
+    <button onclick="removeFilter()">Remove Filter</button>
+    <br><br>
+    <table id="packets">
+        <thead>
+            <tr>
+                <th>Number</th>
+                <th>Timestamp</th>
+                <th>Source IP</th>
+                <th>Source Port</th>
+                <th>Destination IP</th>
+                <th>Destination Port</th>
+                <th>Protocol</th>
+                <th>Length (bytes)</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</body>
+</html>
