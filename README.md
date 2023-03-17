@@ -30,5 +30,5 @@ To use EC PacketSniffer, follow the steps below:
 
 ## License
 
-You can check out the license for this project at [MIT License](https://github.com/rcarlevale-personal/ECPacketSniffer/blob/main/LICENSE)
+You can check out the license for this project at [MIT License](https://github.com/rcarlevale-personal/ECPacketSniffer/blob/main/LICENSE).
 
