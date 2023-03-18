@@ -110,14 +110,13 @@
 </head>
 <body>
     <h1>EC Packet Sniffer</h1>
-    <p>Click the buttons below to start and stop packet sniffing</p>
     <button onclick="startSniffing()">Start Sniffing</button>
     <button onclick="stopSniffing()">Stop Sniffing</button>
     <br><br>
-    <label for="port-input">Filter by port number:</label>
+    <label for="port-input">Filter Packets via Port #:</label>
     <input type="text" id="port-input" name="port">
-    <button onclick="applyFilter()">Apply Filter</button>
-    <button onclick="removeFilter()">Remove Filter</button>
+    <button onclick="applyFilter()">Apply Port Filter</button>
+    <button onclick="removeFilter()">Remove Port Filter</button>
     <br><br>
     <table id="packets">
         <thead>
