@@ -3,14 +3,11 @@ from flask import Flask, render_template
 from flask_socketio import SocketIO, emit
 import scapy.all as scapy
 
-# Initialize Flask app
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret'
 
-# Set up Flask-SocketIO
 socketio = SocketIO(app)
 
-# Global variables
 sniffing = False
 packets = []
 current_port_filter = None
@@ -117,6 +114,5 @@ def apply_filter_route(port):
 def remove_filter_route():
     remove_filter()
 
-# Start the Flask-SocketIO app
 if __name__ == '__main__':
     socketio.run(app)
